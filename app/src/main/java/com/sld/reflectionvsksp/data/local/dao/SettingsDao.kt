@@ -17,8 +17,13 @@ interface SettingsDao {
     @Upsert
     suspend fun upsertValue(value: SettingValueEntity)
 
+    @Upsert
+    suspend fun upsertValues(values: List<SettingValueEntity>)
+
+    @Query("SELECT * FROM settings WHERE name = :name LIMIT 1")
+    suspend fun findSettings(name: String): SettingsEntity?
+
     @Transaction
     @Query("SELECT * FROM settings WHERE name = :name LIMIT 1")
     suspend fun getSettings(name: String): SettingsWithValues?
-
 }

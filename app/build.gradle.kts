@@ -37,27 +37,44 @@ android {
 
 dependencies {
 
-    implementation("androidx.room:room-runtime:3.0.3")
-    implementation("androidx.room:room-ktx:3.0.3")
-    ksp("androidx.room:room-compiler:3.0.3")
+    // Project modules
     implementation(project(":settings-annotations"))
     ksp(project(":settings-processor"))
-    implementation(platform("io.insert-koin:koin-bom:4.2.2"))
-    implementation("io.insert-koin:koin-android")
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+
+    // Kotlin
     implementation(kotlin("reflect"))
-    implementation(platform(libs.androidx.compose.bom))
+
+    // AndroidX
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Unit tests
     testImplementation(libs.junit)
+
+    // Instrumented tests
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+    // Debug
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 

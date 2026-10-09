@@ -17,6 +17,7 @@ import com.sld.settings.annotations.ksp.SettingsModel
 class SettingsProcessor(private val environment: SymbolProcessorEnvironment) : SymbolProcessor {
 
     private val generatedModels = mutableSetOf<String>()
+    private val codeGenerator = environment.codeGenerator
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
 
@@ -28,14 +29,20 @@ class SettingsProcessor(private val environment: SymbolProcessorEnvironment) : S
 
         symbols.filterIsInstance<KSClassDeclaration>().forEach { declaration ->
 
+            environment.logger.warn("Processing model: ${declaration.simpleName.asString()}")
+
             val modelName = declaration.qualifiedName?.asString() ?: return@forEach
             if (!generatedModels.add(modelName)) return@forEach
 
             logDeclaration(declaration)
             generateModelInfo(declaration)
             generateMapper(declaration)
+            generateFactory(declaration)
 
             declaration.getAllProperties().forEach { property ->
+
+                val expression = valueExpression(property)
+                environment.logger.warn("${property.simpleName.asString()} -> $expression")
 
                 val propertyName = property.simpleName.asString()
                 val propertyType = property.type.resolve().declaration.qualifiedName?.asString()
@@ -238,6 +245,73 @@ class SettingsProcessor(private val environment: SymbolProcessorEnvironment) : S
             }
             """.trimIndent()
             )
+        }
+    }
+
+    private fun valueExpression(property: KSPropertyDeclaration): String {
+
+        val name = property.simpleName.asString()
+        val type = property.type.resolve()
+        val declaration = type.declaration
+        val qualifiedType = declaration.qualifiedName?.asString()
+
+        return when (qualifiedType) {
+            "kotlin.Boolean" ->
+                """values["$name"]?.toBooleanStrict() ?: error("Missing setting: $name")"""
+
+            "kotlin.Int" ->
+                """values["$name"]?.toInt() ?: error("Missing setting: $name")"""
+
+            "kotlin.String" ->
+                """values["$name"] ?: error("Missing setting: $name")"""
+
+            else -> {
+                val classDeclaration = declaration as? KSClassDeclaration
+
+                if (classDeclaration?.classKind == ClassKind.ENUM_CLASS) {
+                    """$qualifiedType.valueOf(values["$name"] ?: error("Missing setting: $name"))"""
+                } else {
+                    """TODO("Unsupported type: $qualifiedType")"""
+                }
+            }
+        }
+
+    }
+
+    private fun generateFactory(declaration: KSClassDeclaration) {
+
+        val packageName = declaration.packageName.asString()
+        val modelName = declaration.simpleName.asString()
+        val modelType = declaration.qualifiedName!!.asString()
+        val factoryName = "Generated${modelName}Factory"
+        val properties = declaration.getAllProperties().toList()
+        val constructorArguments = properties.joinToString(",\n") { property ->
+            val name = property.simpleName.asString()
+            val expression = valueExpression(property)
+            "            $name = $expression"
+        }
+
+        val content = """
+        package $packageName.generated
+
+        object $factoryName {
+
+            fun create(
+                values: Map<String, String>
+            ): $modelType {
+                return $modelType($constructorArguments)
+            }
+        }
+        """.trimIndent()
+
+        val file = codeGenerator.createNewFile(
+            dependencies = Dependencies(aggregating = false, declaration.containingFile!!),
+            packageName = "$packageName.generated",
+            fileName = factoryName
+        )
+
+        file.bufferedWriter().use { writer ->
+            writer.write(content)
         }
     }
 

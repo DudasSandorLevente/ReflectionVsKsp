@@ -1,6 +1,7 @@
 package com.sld.reflectionvsksp.settings
 
 import com.sld.reflectionvsksp.api.ISettingsApi
+import com.sld.reflectionvsksp.api.LocalSettingsApi
 import com.sld.reflectionvsksp.api.MockSettingsApi
 import com.sld.reflectionvsksp.repository.SettingsRepository
 import com.sld.reflectionvsksp.ui.SettingsViewModel
@@ -18,16 +19,28 @@ enum class MappingMode {
     REFLECTION,
     KSP
 }
+enum class DataSourceMode {
+    MOCK, LOCAL
+}
 
 private val commonModule = module {
-    single<ISettingsApi> {
-        MockSettingsApi(modelFactory = get<ISettingsModelFactory>())
-    }
     single {
         SettingsRepository(api = get())
     }
     viewModel {
         SettingsViewModel(repository = get(), mapper = get())
+    }
+}
+
+private val mockApiModule = module {
+    single<ISettingsApi> {
+        MockSettingsApi(modelFactory = get())
+    }
+}
+
+private val localApiModule = module {
+    single<ISettingsApi> {
+        LocalSettingsApi(localDataSource = get(), modelFactory = get())
     }
 }
 
@@ -49,11 +62,15 @@ private val kspModule = module {
     }
 }
 
-fun createAppModules(mode: MappingMode): List<Module> {
+fun createAppModules(mappingMode: MappingMode, sourceMode: DataSourceMode): List<Module> {
 
     return listOf(
         commonModule,
-        when (mode) {
+        when (sourceMode) {
+            DataSourceMode.MOCK -> mockApiModule
+            DataSourceMode.LOCAL -> localApiModule
+        },
+        when (mappingMode) {
             MappingMode.REFLECTION -> reflectionModule
             MappingMode.KSP -> kspModule
         },

@@ -1,42 +1,43 @@
 package com.sld.reflectionvsksp.api
 
-import com.sld.reflectionvsksp.vs.enums.DisplayTheme
 import com.sld.reflectionvsksp.vs.IDisplayModel
-import com.sld.reflectionvsksp.vs.IModelFactory
+import com.sld.reflectionvsksp.vs.ISettingsModelFactory
 import com.sld.reflectionvsksp.vs.ISoundModel
-import com.sld.reflectionvsksp.vs.enums.SoundOutputMode
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
-class MockSettingsApi(private val modelFactory: IModelFactory): ISettingsApi {
+class MockSettingsApi(private val modelFactory: ISettingsModelFactory) : ISettingsApi {
 
     override suspend fun getSoundSettings(): ISoundModel {
         delay(500.milliseconds)
         return modelFactory.createSoundModel(
-            enabled = true,
-            volume = 70,
-            voiceGuidance = true,
-            outputMode = SoundOutputMode.SYSTEM_DEFAULT,
-            muteNotifications = false
+            mapOf(
+                "enabled" to "true",
+                "volume" to "70",
+                "voiceGuidance" to "true",
+                "outputMode" to "SYSTEM_DEFAULT",
+                "muteNotifications" to "false"
+            )
         )
     }
 
     override suspend fun getDisplaySettings(): IDisplayModel {
         delay(700.milliseconds)
         return modelFactory.createDisplayModel(
-            darkMode = false,
-            brightness = 80,
-            showTraffic = true,
-            theme = DisplayTheme.SYSTEM
+            mapOf(
+                "darkMode" to "false",
+                "brightness" to "80",
+                "showTraffic" to "true",
+                "theme" to "SYSTEM"
+            )
         )
     }
 
     override suspend fun saveSoundSettings(model: ISoundModel) {
-        //TODO("Not yet implemented")
+        // TODO
     }
 
     override suspend fun saveDisplaySettings(model: IDisplayModel) {
-        //TODO("Not yet implemented")
+        // TODO
     }
-
 }

@@ -1,7 +1,6 @@
 package com.sld.reflectionvsksp.api
 
 import com.sld.reflectionvsksp.vs.IDisplayModel
-import com.sld.reflectionvsksp.vs.IModelFactory
 import com.sld.reflectionvsksp.vs.ISoundModel
 
 interface ISettingsApi {

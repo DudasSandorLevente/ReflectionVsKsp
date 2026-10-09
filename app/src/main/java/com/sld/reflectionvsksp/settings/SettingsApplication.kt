@@ -10,7 +10,7 @@ class SettingsApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@SettingsApplication)
-            modules(appModule, databaseModule)
+            modules(createAppModules(MappingMode.REFLECTION))
         }
     }
 

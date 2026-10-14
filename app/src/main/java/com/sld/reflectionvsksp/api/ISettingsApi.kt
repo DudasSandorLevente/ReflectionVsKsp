@@ -1,13 +1,10 @@
 package com.sld.reflectionvsksp.api
 
-import com.sld.reflectionvsksp.vs.IDisplayModel
-import com.sld.reflectionvsksp.vs.ISoundModel
+import com.sld.reflectionvsksp.data.local.model.SettingsData
 
 interface ISettingsApi {
 
-    suspend fun getSoundSettings(): ISoundModel
-    suspend fun getDisplaySettings(): IDisplayModel
-    suspend fun saveSoundSettings(model: ISoundModel)
-    suspend fun saveDisplaySettings(model: IDisplayModel)
+    suspend fun getSettings(): List<SettingsData>
+    suspend fun saveSettings(settings: SettingsData)
 
 }

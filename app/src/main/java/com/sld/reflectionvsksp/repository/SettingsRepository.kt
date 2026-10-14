@@ -1,18 +1,16 @@
 package com.sld.reflectionvsksp.repository
 
 import com.sld.reflectionvsksp.api.ISettingsApi
-import com.sld.reflectionvsksp.vs.IDisplayModel
-import com.sld.reflectionvsksp.vs.ISoundModel
+import com.sld.reflectionvsksp.data.local.model.SettingsData
 
-class SettingsRepository(
-    private val api: ISettingsApi
-) {
+class SettingsRepository(private val api: ISettingsApi) {
 
-    suspend fun loadSoundSettings(): ISoundModel {
-        return api.getSoundSettings()
+    suspend fun loadSettings(): List<SettingsData> {
+        return api.getSettings()
     }
 
-    suspend fun loadDisplaySettings(): IDisplayModel {
-        return api.getDisplaySettings()
+    suspend fun saveSettings(settings: SettingsData) {
+        api.saveSettings(settings)
     }
+
 }

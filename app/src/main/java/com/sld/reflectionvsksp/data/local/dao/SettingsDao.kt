@@ -26,4 +26,12 @@ interface SettingsDao {
     @Transaction
     @Query("SELECT * FROM settings WHERE name = :name LIMIT 1")
     suspend fun getSettings(name: String): SettingsWithValues?
+
+    @Transaction
+    @Query("SELECT * FROM settings ORDER BY id")
+    suspend fun getAllSettings(): List<SettingsWithValues>
+
+    @Query("""UPDATE setting_values SET value = :value WHERE settingsId = :settingsId AND `key` = :key""")
+    suspend fun updateValue(settingsId: Long, key: String, value: String): Int
+
 }

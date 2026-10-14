@@ -10,9 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sld.reflectionvsksp.settings.SwitchItem
+import com.sld.reflectionvsksp.ui.view.SettingsAction.ValueChanged
 
 @Composable
-fun SwitchSettingRow(item: SwitchItem){
+fun SwitchSettingRow(item: SwitchItem, onAction: (SettingsAction) -> Unit){
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -20,8 +21,8 @@ fun SwitchSettingRow(item: SwitchItem){
     ) {
         Text(text = item.title, modifier = Modifier.weight(1f))
         Switch(checked = item.value,
-            onCheckedChange = {
-                // később
+            onCheckedChange = { checked ->
+                onAction(ValueChanged(id = item.id, value = checked.toString()))
             }
         )
     }

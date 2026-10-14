@@ -9,18 +9,16 @@ import androidx.compose.ui.Modifier
 import com.sld.reflectionvsksp.ui.SettingsUiState
 
 @Composable
-fun SettingsContent(state: SettingsUiState, modifier: Modifier) {
+fun SettingsContent(
+    state: SettingsUiState, onAction: (SettingsAction) -> Unit, modifier: Modifier
+) {
     when {
-        state.isLoading -> {
-            CircularProgressIndicator()
-        }
-        state.error != null -> {
-            Text(text = state.error)
-        }
+        state.isLoading -> { CircularProgressIndicator() }
+        state.error != null -> { Text(text = state.error) }
         else -> {
             LazyColumn {
                 items(items = state.items, key = { item -> item.id }) { item ->
-                    SettingsRow(item)
+                    SettingsRow(item, onAction)
                 }
             }
         }

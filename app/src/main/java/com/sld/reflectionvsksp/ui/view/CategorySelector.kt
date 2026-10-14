@@ -9,25 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sld.reflectionvsksp.settings.SettingsCategory
 
 @Composable
-fun CategorySelector(onCategorySelected: (SettingsCategory) -> Unit) {
+fun CategorySelector(categories: List<String>, onCategorySelected: (String) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Button(
-            modifier = Modifier.weight(1f),
-            onClick = { onCategorySelected(SettingsCategory.SOUND) }
-        ) {
-            Text("Sound")
-        }
-        Button(
-            modifier = Modifier.weight(1f),
-            onClick = { onCategorySelected(SettingsCategory.DISPLAY) }
-        ) {
-            Text("Display")
+        categories.forEach { category ->
+            Button(modifier = Modifier.weight(1f), onClick = { onCategorySelected(category) }) {
+                Text(category)
+            }
         }
     }
 }

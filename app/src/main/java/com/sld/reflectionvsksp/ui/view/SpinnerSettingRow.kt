@@ -14,26 +14,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sld.reflectionvsksp.settings.SpinnerItem
+import com.sld.reflectionvsksp.ui.view.SettingsAction.ValueChanged
 
 @Composable
-fun SpinnerSettingRow(item: SpinnerItem) {
+fun SpinnerSettingRow(item: SpinnerItem, onAction: (SettingsAction) -> Unit) {
 
     var expanded by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(16.dp)) {
+
         Text(item.title)
-        Button(onClick = { expanded = true }) {
-            Text(item.selected)
-        }
+        Button(onClick = { expanded = true }) { Text(item.selected) }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             item.options.forEach { option ->
                 DropdownMenuItem(text = { Text(option) },
                     onClick = {
                         expanded = false
-                        // később state update
+                        onAction(ValueChanged(id = item.id, value = option))
                     }
                 )
             }
         }
+
     }
+
 }

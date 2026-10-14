@@ -7,10 +7,10 @@ import com.sld.reflectionvsksp.settings.SpinnerItem
 import com.sld.reflectionvsksp.settings.SwitchItem
 
 @Composable
-fun SettingsRow(item: SettingItem) {
+fun SettingsRow(item: SettingItem, onAction: (SettingsAction) -> Unit) {
     when (item) {
-        is SwitchItem -> SwitchSettingRow(item)
-        is SliderItem -> SliderSettingRow(item)
-        is SpinnerItem -> SpinnerSettingRow(item)
+        is SwitchItem -> SwitchSettingRow(item, onAction)
+        is SliderItem -> SliderSettingRow(item, onAction)
+        is SpinnerItem -> SpinnerSettingRow(item, onAction)
     }
 }

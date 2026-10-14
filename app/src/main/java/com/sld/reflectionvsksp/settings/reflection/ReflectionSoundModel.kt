@@ -1,11 +1,13 @@
-package com.sld.reflectionvsksp.vs.reflection
+package com.sld.reflectionvsksp.settings.reflection
 
+import com.sld.reflectionvsksp.settings.ISoundModel
+import com.sld.reflectionvsksp.settings.enums.SoundOutputMode
 import com.sld.settings.annotations.reflection.ReflectionSliderSetting
 import com.sld.settings.annotations.reflection.ReflectionSpinnerSetting
 import com.sld.settings.annotations.reflection.ReflectionSwitchSetting
-import com.sld.reflectionvsksp.vs.ISoundModel
-import com.sld.reflectionvsksp.vs.enums.SoundOutputMode
+import com.sld.settings.annotations.reflection.ReflectionSettingsModel
 
+@ReflectionSettingsModel(name = "SOUND")
 data class ReflectionSoundModel(
 
     @ReflectionSwitchSetting("Sound enabled", order = 0)

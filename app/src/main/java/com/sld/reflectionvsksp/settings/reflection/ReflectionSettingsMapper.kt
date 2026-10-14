@@ -1,9 +1,9 @@
-package com.sld.reflectionvsksp.vs.reflection
+package com.sld.reflectionvsksp.settings.reflection
 
+import com.sld.reflectionvsksp.settings.ISettingsMapper
 import com.sld.settings.annotations.reflection.ReflectionSliderSetting
 import com.sld.settings.annotations.reflection.ReflectionSpinnerSetting
 import com.sld.settings.annotations.reflection.ReflectionSwitchSetting
-import com.sld.reflectionvsksp.vs.ISettingsMapper
 import com.sld.reflectionvsksp.settings.SettingItem
 import com.sld.reflectionvsksp.settings.SliderItem
 import com.sld.reflectionvsksp.settings.SpinnerItem

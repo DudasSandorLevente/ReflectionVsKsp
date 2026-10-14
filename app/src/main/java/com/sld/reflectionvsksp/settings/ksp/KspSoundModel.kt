@@ -1,13 +1,13 @@
-package com.sld.reflectionvsksp.vs.ksp
+package com.sld.reflectionvsksp.settings.ksp
 
-import com.sld.reflectionvsksp.vs.ISoundModel
-import com.sld.reflectionvsksp.vs.enums.SoundOutputMode
+import com.sld.reflectionvsksp.settings.ISoundModel
+import com.sld.reflectionvsksp.settings.enums.SoundOutputMode
 import com.sld.settings.annotations.ksp.KspSliderSetting
 import com.sld.settings.annotations.ksp.KspSpinnerSetting
 import com.sld.settings.annotations.ksp.KspSwitchSetting
 import com.sld.settings.annotations.ksp.SettingsModel
 
-@SettingsModel
+@SettingsModel("SOUND")
 data class KspSoundModel (
 
     @KspSwitchSetting(title = "Sound enabled", order = 0)

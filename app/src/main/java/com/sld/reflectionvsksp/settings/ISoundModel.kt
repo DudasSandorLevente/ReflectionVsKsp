@@ -1,6 +1,6 @@
-package com.sld.reflectionvsksp.vs
+package com.sld.reflectionvsksp.settings
 
-import com.sld.reflectionvsksp.vs.enums.SoundOutputMode
+import com.sld.reflectionvsksp.settings.enums.SoundOutputMode
 
 interface ISoundModel {
     val enabled: Boolean

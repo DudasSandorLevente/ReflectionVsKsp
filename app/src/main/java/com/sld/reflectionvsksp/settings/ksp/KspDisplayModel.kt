@@ -1,13 +1,13 @@
-package com.sld.reflectionvsksp.vs.ksp
+package com.sld.reflectionvsksp.settings.ksp
 
-import com.sld.reflectionvsksp.vs.enums.DisplayTheme
-import com.sld.reflectionvsksp.vs.IDisplayModel
+import com.sld.reflectionvsksp.settings.IDisplayModel
+import com.sld.reflectionvsksp.settings.enums.DisplayTheme
 import com.sld.settings.annotations.ksp.KspSliderSetting
 import com.sld.settings.annotations.ksp.KspSpinnerSetting
 import com.sld.settings.annotations.ksp.KspSwitchSetting
 import com.sld.settings.annotations.ksp.SettingsModel
 
-@SettingsModel
+@SettingsModel("DISPLAY")
 data class KspDisplayModel(
 
     @KspSwitchSetting(title = "Dark mode", order = 0)
@@ -22,4 +22,4 @@ data class KspDisplayModel(
     @KspSpinnerSetting(title = "Display theme", order = 3)
     override val theme: DisplayTheme
 
-):IDisplayModel
+): IDisplayModel

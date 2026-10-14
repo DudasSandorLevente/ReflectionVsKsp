@@ -1,6 +1,6 @@
-package com.sld.reflectionvsksp.vs
+package com.sld.reflectionvsksp.settings
 
-import com.sld.reflectionvsksp.vs.enums.DisplayTheme
+import com.sld.reflectionvsksp.settings.enums.DisplayTheme
 
 interface IDisplayModel {
     val darkMode: Boolean

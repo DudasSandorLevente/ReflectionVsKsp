@@ -1,41 +1,32 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.test)
 }
 
 android {
-    namespace = "com.sld.benchmark"
+    namespace = "com.sld.reflectionvsksp.benchmark"
+    targetProjectPath = ":app"
     compileSdk {
         version = release(37)
     }
-
     defaultConfig {
-        applicationId = "com.sld.benchmark"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            optimization {
-                enable = false
-            }
-        }
+        testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildTypes {
+        create("benchmark") {
+            initWith(getByName("debug"))
+            matchingFallbacks += listOf("debug")
+        }
+    }
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
+    implementation(libs.androidx.junit)
+    implementation(libs.androidx.benchmark.junit4)
+    implementation("androidx.lifecycle:lifecycle-common:2.11.0")
 }

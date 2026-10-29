@@ -25,6 +25,12 @@ android {
                 enable = false
             }
         }
+        create("benchmark") {
+            initWith(getByName("release"))
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -67,6 +73,8 @@ dependencies {
 
     // Unit tests
     testImplementation(libs.junit)
+    debugImplementation(libs.androidx.benchmark.junit4)
+    add("benchmarkImplementation", libs.androidx.benchmark.junit4)
 
     // Instrumented tests
     androidTestImplementation(platform(libs.androidx.compose.bom))

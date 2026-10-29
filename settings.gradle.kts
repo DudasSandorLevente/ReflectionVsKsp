@@ -26,3 +26,4 @@ rootProject.name = "ReflectionVsKsp"
 include(":app")
 include(":settings-annotations")
 include(":settings-processor")
+include(":benchmark")

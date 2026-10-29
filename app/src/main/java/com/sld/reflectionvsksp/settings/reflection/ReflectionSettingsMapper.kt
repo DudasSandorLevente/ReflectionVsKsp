@@ -40,8 +40,9 @@ class ReflectionSettingsMapper: ISettingsMapper {
             val spinnerAnnotation = property.findAnnotation<ReflectionSpinnerSetting>()
             if (spinnerAnnotation != null) {
                 val value = property.getter.call(model) as? Enum<*>
-                        ?: return@mapNotNull null
-                val options = value::class.java.enumConstants.map { it.name }
+                    ?: return@mapNotNull null
+                val options = value::class.java.enumConstants?.map { it.name }
+                    ?: emptyList()
                 return@mapNotNull SpinnerItem(
                     id = property.name, title = spinnerAnnotation.title,
                     selected = value.name, options = options

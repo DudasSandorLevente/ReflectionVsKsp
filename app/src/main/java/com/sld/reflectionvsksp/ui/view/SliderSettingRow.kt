@@ -16,7 +16,7 @@ fun SliderSettingRow(item: SliderItem, onAction: (SettingsAction) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Text(item.title)
         Slider(
-            value = item.value.toFloat(),
+            value = item.value.coerceIn(item.min, item.max).toFloat(),
             onValueChange = { value ->
                 onAction(ValueChanged(id = item.id, value = value.toInt().toString()))
             },

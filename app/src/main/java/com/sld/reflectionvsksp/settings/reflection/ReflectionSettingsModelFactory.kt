@@ -48,11 +48,20 @@ class ReflectionSettingsModelFactory(modelClasses: List<KClass<out Any>>) : ISet
     }
 
     private fun convertEnum(rawValue: String, type: KType): Any {
+
         val kClass = type.classifier as? KClass<*> ?: error("Unsupported type: $type")
-        require(kClass.java.isEnum) { "Unsupported setting type: $type" }
-        return kClass.java.enumConstants.filterIsInstance<Enum<*>>().firstOrNull {
+        require(kClass.java.isEnum) {
+            "Unsupported setting type: $type"
+        }
+        val enumConstants = requireNotNull(kClass.java.enumConstants) {
+            "No enum constants available for ${kClass.simpleName}"
+        }
+        return enumConstants.filterIsInstance<Enum<*>>().firstOrNull {
             it.name == rawValue
-        } ?: error("Invalid enum value '$rawValue' for ${kClass.simpleName}")
+        } ?: throw IllegalArgumentException(
+            "Invalid enum value '$rawValue' for ${kClass.simpleName}"
+        )
+
     }
 
 }

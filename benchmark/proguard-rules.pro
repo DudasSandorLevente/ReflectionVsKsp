@@ -1,0 +1,2 @@
+-keep class androidx.tracing.Trace { *; }
+-keep class androidx.benchmark.junit4.BenchmarkRule { *; }

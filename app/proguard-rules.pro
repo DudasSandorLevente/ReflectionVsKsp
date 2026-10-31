@@ -1,0 +1,9 @@
+-keep class androidx.tracing.Trace { *; }
+-keep class kotlin.LazyKt { *; }
+-keep class kotlin.text.StringsKt { *; }
+-keep class kotlin.** { *; }
+-keepattributes RuntimeVisibleAnnotations
+-keep @com.sld.settings.annotations.reflection.ReflectionSettingsModel class * { *; }
+-keep class androidx.benchmark.junit4.** { *; }
+-keep class androidx.benchmark.Arguments { *; }
+-keep class androidx.benchmark.** { *; }

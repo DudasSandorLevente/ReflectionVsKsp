@@ -22,6 +22,14 @@ android {
             initWith(getByName("debug"))
             matchingFallbacks += listOf("debug")
         }
+        create("benchmarkR8") {
+            initWith(getByName("benchmark"))
+            isDebuggable = false
+            matchingFallbacks += listOf("benchmark")
+            isMinifyEnabled = true
+            //proguardFiles("proguard-rules.pro")
+            testProguardFiles("proguard-rules.pro")
+        }
     }
 }
 
@@ -29,4 +37,5 @@ dependencies {
     implementation(libs.androidx.junit)
     implementation(libs.androidx.benchmark.junit4)
     implementation("androidx.lifecycle:lifecycle-common:2.11.0")
+    implementation("androidx.tracing:tracing:1.1.0")
 }

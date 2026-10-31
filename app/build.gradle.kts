@@ -31,6 +31,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
         }
+        create("benchmarkR8") {
+            initWith(getByName("benchmark"))
+            optimization {
+                enable = true
+            }
+            proguardFiles("proguard-rules.pro")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -75,6 +82,7 @@ dependencies {
     testImplementation(libs.junit)
     debugImplementation(libs.androidx.benchmark.junit4)
     add("benchmarkImplementation", libs.androidx.benchmark.junit4)
+    add("benchmarkR8Implementation", libs.androidx.benchmark.junit4)
 
     // Instrumented tests
     androidTestImplementation(platform(libs.androidx.compose.bom))

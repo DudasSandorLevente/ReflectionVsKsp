@@ -64,7 +64,7 @@ fun SettingsScreen(name: String, viewModel: SettingsViewModel, modifier: Modifie
             ) {
                 TextButton(onClick = { selectedCategory = null }) {
                     Text(
-                        text = "← Back",
+                        text = "< Back",
                         style = MaterialTheme.typography.titleMedium
                     )
                 }

@@ -6,6 +6,14 @@ A projekt mindkét megoldást azonos interfészek mögött valósítja meg, Andr
 
 **Dokumentáció:** [English](README.md) | Magyar
 
+## Képernyőképek
+
+Az alkalmazás Jetpack Compose és Material 3 használatával készült beállításkezelő felületet biztosít.
+
+| Kategóriák | Beállítások részletes nézete |
+|---|---|
+| <img src="screenshots/categories.png" width="300" alt="Beállításkategóriák képernyője"> | <img src="screenshots/settings-detail.png" width="300" alt="Beállítások részletes képernyője"> |
+
 ## A projekt céljai
 
 - A futásidejű Reflection és a fordításidejű kódgenerálás összehasonlítása.
@@ -128,4 +136,46 @@ A projekt azt is vizsgálja, hogy a Kotlin runtime megtartási szabályai (*keep
 
 ## Fordítás és futtatás
 
-Nyisd
+Nyisd meg a projektet Android Studióban, megfelelő Android SDK- és Gradle-környezettel.
+
+A debug alkalmazás lefordítása:
+
+```bash
+./gradlew :app:assembleDebug
+```
+
+Windows alatt:
+
+```powershell
+.\gradlew.bat :app:assembleDebug
+```
+
+A beállításkezelő felület kipróbálásához futtasd az `app` modult Android-eszközön vagy emulátoron.
+
+A projekt a teljesítménymérésekhez külön `benchmark` és `benchmarkR8` buildtípusokat tartalmaz.
+
+## Tesztelés
+
+A projekt unit teszteket tartalmaz a Reflection- és KSP-implementációk működésének és konzisztenciájának ellenőrzésére, valamint Gradle-integrációs teszteket a saját KSP processzorhoz.
+
+A debug unit tesztek és a processzor integrációs tesztjeinek futtatása Windows alatt:
+
+```powershell
+.\gradlew.bat testDebugUnitTest :settings-processor:test
+```
+
+macOS vagy Linux alatt:
+
+```bash
+./gradlew testDebugUnitTest :settings-processor:test
+```
+
+Ezek a tesztek Android-emulátor vagy fizikai eszköz nélkül is futtathatók.
+
+## Főbb tanulságok
+
+A projekt bemutatja, hogy a fordításidejű kódgenerálás hogyan csökkentheti jelentősen a futásidejű többletköltséget egy metaadatvezérelt beállításkezelő rendszerben.
+
+Arra is rávilágít, miért fontos a teljesítménymérések módszertana, a memóriaallokációk vizsgálata, a fordítói optimalizáció és a reprodukálhatóság az eredmények értékelésekor.
+
+A cél nem annak állítása, hogy a KSP minden esetben gyorsabb, hanem annak bemutatása, **milyen helyzetekben és miért teljesíthet jobban a generált kód a futásidejű Reflection-megoldásnál egy konkrét Android-implementációban**.

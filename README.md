@@ -5,6 +5,14 @@ An Android project comparing **Kotlin Reflection** and **Kotlin Symbol Processin
 
 The project implements both approaches behind the same interfaces, measures their runtime performance using AndroidX Benchmark, and explores the effects of R8 optimization.
 
+## Screenshots
+
+The application provides a settings interface built with Jetpack Compose and Material 3.
+
+| Categories | Settings Detail |
+|---|---|
+| <img src="screenshots/categories.png" width="300" alt="Settings categories screen"> | <img src="screenshots/settings-detail.png" width="300" alt="Settings detail screen"> |
+
 ## Project Goals
 
 - Compare runtime reflection with compile-time generated code.
@@ -144,6 +152,24 @@ On Windows:
 Run the `app` module on an Android device or emulator to explore the settings interface.
 
 The project includes dedicated `benchmark` and `benchmarkR8` build types for performance measurements.
+
+## Testing
+
+The project includes unit tests for validating the behavior and consistency of the Reflection and KSP implementations, as well as Gradle integration tests for the custom KSP processor.
+
+Run the debug unit tests and processor integration tests:
+
+```powershell
+.\gradlew.bat testDebugUnitTest :settings-processor:test
+```
+
+On macOS or Linux:
+
+```bash
+./gradlew testDebugUnitTest :settings-processor:test
+```
+
+The tests can be executed without an Android emulator or physical device.
 
 ## Key Takeaways
 
